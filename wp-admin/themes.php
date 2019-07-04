@@ -564,13 +564,29 @@ if ( ! is_multisite() && current_user_can( 'edit_themes' ) && $broken_themes ) {
 				<# if ( data.tags ) { #>
 					<p class="theme-tags"><span><?php _e( 'Tags:' ); ?></span> {{{ data.tags }}}</p>
 				<# } #>
+				<?php
+				/**
+				 * Fires after all the theme info on the theme details modal.
+				 *
+				 * @since 5.3.0
+				*/
+				do_action( 'after_theme_info' );
+				?>
 			</div>
 		</div>
 
 		<div class="theme-actions">
 			<div class="active-theme">
 				<a href="{{{ data.actions.customize }}}" class="button button-primary customize load-customize hide-if-no-customize"><?php _e( 'Customize' ); ?></a>
-				<?php echo implode( ' ', $current_theme_actions ); ?>
+				<?php echo implode( ' ', apply_filters( 'current_theme_actions', $current_theme_actions ) ); ?>
+				<?php
+				/**
+				 * Fires after active theme actions in theme details.
+				 *
+				 * @since 5.3.0
+				*/
+				do_action( 'after_active_theme_actions' );
+				?>
 			</div>
 			<div class="inactive-theme">
 				<?php
@@ -581,7 +597,23 @@ if ( ! is_multisite() && current_user_can( 'edit_themes' ) && $broken_themes ) {
 					<a href="{{{ data.actions.activate }}}" class="button activate" aria-label="<?php echo $aria_label; ?>"><?php _e( 'Activate' ); ?></a>
 				<# } #>
 				<a href="{{{ data.actions.customize }}}" class="button button-primary load-customize hide-if-no-customize"><?php _e( 'Live Preview' ); ?></a>
+				<?php
+				/**
+				 * Fires after inactive theme actions in theme details.
+				 *
+				 * @since 5.3.0
+				*/
+				do_action( 'after_inactive_theme_actions' );
+				?>
 			</div>
+			<?php
+			/**
+			 * Fires after active theme actions in theme details.
+			 *
+			 * @since 5.3.0
+			*/
+			do_action( 'after_theme_actions' );
+			?>
 
 			<# if ( ! data.active && data.actions['delete'] ) { #>
 				<a href="{{{ data.actions['delete'] }}}" class="button delete-theme"><?php _e( 'Delete' ); ?></a>
